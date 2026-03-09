@@ -388,13 +388,7 @@ footer {
 
 /* Responsive */
 @media (max-width: 600px) {
-    #surah-title-arabic {
-        font-size: 3rem;
-    }
 
-    .ayah-text {
-        font-size: 1.8rem;
-    }
 
     .container {
         padding: 80px 15px 20px 15px;
