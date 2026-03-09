@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Recitation</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&family=Sarabun:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="selector-container">
+                <select id="surah-selector">
+                    <option value="55">Surah Ar-Rahman (55)</option>
+                    <option value="67">Surah Al-Mulk (67)</option>
+                </select>
+            </div>
+            <h1 id="surah-title-arabic">الرحمن</h1>
+            <h2 id="surah-title-en">Surah Ar-Rahman</h2>
+            <p id="surah-info">กำลังโหลดข้อมูล...</p>
+        </header>
+
+        <main id="verses-container">
+            <div class="loader">
+                <div class="spinner"></div>
+                <p>กำลังอัญเชิญพระพจนารถ...</p>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; Copyright, 2026</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
