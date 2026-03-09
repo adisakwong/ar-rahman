@@ -1,4 +1,4 @@
-# My Recitation 🕋
+# myQuran : Recitation 🕋
 
 A premium, mobile-responsive web application designed for the recitation of the Holy Quran. This app features a clean, traditional layout inspired by the Mushaf with modern web aesthetics.
 
