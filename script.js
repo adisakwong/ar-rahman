@@ -1,7 +1,18 @@
+// App Settings State
+const settings = {
+    fontSize: localStorage.getItem('fontSize') || '2.8',
+    numberType: localStorage.getItem('numberType') || 'arabic',
+    theme: localStorage.getItem('theme') || 'light'
+};
+
+// Apply initial settings
+document.documentElement.setAttribute('data-theme', settings.theme);
+document.documentElement.style.setProperty('--ayah-font-size', `${settings.fontSize}rem`);
+
 const getApiUrl = (surahNo) => `https://quranapi.pages.dev/api/${surahNo}.json`;
-// เราใช้ Proxy เพื่อแก้ปัญหา CORS (Cross-Origin Resource Sharing) 
-// Proxy service for CORS issues (essential when running on GitHub Pages)
 const proxyUrl = 'https://api.allorigins.win/get?url=';
+
+let currentSurahData = null;
 
 async function fetchSurah(surahNo = 55) {
     const versesContainer = document.getElementById('verses-container');
@@ -19,7 +30,6 @@ async function fetchSurah(surahNo = 55) {
         let response;
         let data;
 
-        // GitHub Pages might require proxy usage due to HTTPS/CORS restrictions from some APIs
         try {
             response = await fetch(apiUrl);
             if (!response.ok) throw new Error();
@@ -32,6 +42,7 @@ async function fetchSurah(surahNo = 55) {
             data = JSON.parse(wrapper.contents);
         }
 
+        currentSurahData = data;
         renderSurah(data);
     } catch (error) {
         console.error('Error fetching surah:', error);
@@ -51,6 +62,7 @@ function toArabicDigits(number) {
 }
 
 function renderSurah(data) {
+    if (!data) return;
     const versesContainer = document.getElementById('verses-container');
     const surahTitleAb = document.getElementById('surah-title-arabic');
     const surahTitleEn = document.getElementById('surah-title-en');
@@ -70,18 +82,63 @@ function renderSurah(data) {
         verseCard.className = 'verse-card';
         verseCard.style.animationDelay = `${index * 0.05}s`;
 
-        const verseNumberArabic = toArabicDigits(index + 1);
+        const displayNum = settings.numberType === 'arabic' 
+            ? `﴿${toArabicDigits(index + 1)}﴾` 
+            : `(${index + 1})`;
 
-        // วางหมายเลขไว้ท้าย Ayat ในสไตล์อัลกุรอาน
         verseCard.innerHTML = `
             <div class="ayah-text">
-                ${verse} <span class="arabic-number-end">﴿${verseNumberArabic}﴾</span>
+                ${verse} <span class="arabic-number-end">${displayNum}</span>
             </div>
         `;
 
         versesContainer.appendChild(verseCard);
     });
 }
+
+// Settings UI Logic
+const modal = document.getElementById('settings-modal');
+const settingsBtn = document.getElementById('settings-btn');
+const closeBtn = document.querySelector('.close-btn');
+
+settingsBtn.onclick = () => modal.style.display = "block";
+closeBtn.onclick = () => modal.style.display = "none";
+window.onclick = (event) => {
+    if (event.target == modal) modal.style.display = "none";
+};
+
+// Font Size Control
+const fontSizeSlider = document.getElementById('font-size-slider');
+const fontSizeValue = document.getElementById('font-size-value');
+
+fontSizeSlider.value = settings.fontSize;
+fontSizeValue.textContent = settings.fontSize;
+
+fontSizeSlider.oninput = (e) => {
+    const val = e.target.value;
+    settings.fontSize = val;
+    fontSizeValue.textContent = val;
+    document.documentElement.style.setProperty('--ayah-font-size', `${val}rem`);
+    localStorage.setItem('fontSize', val);
+};
+
+// Number Type Control
+const numberTypeSelect = document.getElementById('number-type');
+numberTypeSelect.value = settings.numberType;
+numberTypeSelect.onchange = (e) => {
+    settings.numberType = e.target.value;
+    localStorage.setItem('numberType', e.target.value);
+    renderSurah(currentSurahData);
+};
+
+// Theme Control
+const themeToggle = document.getElementById('theme-toggle');
+themeToggle.value = settings.theme;
+themeToggle.onchange = (e) => {
+    settings.theme = e.target.value;
+    document.documentElement.setAttribute('data-theme', e.target.value);
+    localStorage.setItem('theme', e.target.value);
+};
 
 // Event listener for Surah selection
 document.getElementById('surah-selector').addEventListener('change', (e) => {

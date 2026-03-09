@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Recitation</title>
+    <title>myQuran : Recitation</title>
+    <link rel="manifest" href="manifest.json">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,16 +16,61 @@
 </head>
 
 <body>
+    <nav class="top-nav">
+        <div class="nav-content">
+            <div class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 19.5C4 18.837 4.26339 18.2011 4.73223 17.7322C5.20107 17.2634 5.83696 17 6.5 17H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M6.5 2H20V22H6.5C5.83696 22 5.20107 21.7366 4.73223 21.2678C4.26339 20.7989 4 20.163 4 19.5V4.5C4 3.83696 4.26339 3.20107 4.73223 2.73223C5.20107 2.26339 5.83696 2 6.5 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                myQuran
+            </div>
+            <div class="nav-actions">
+                <div class="selector-container">
+                    <select id="surah-selector">
+                        <option value="55">Surah Ar-Rahman (55)</option>
+                        <option value="67">Surah Al-Mulk (67)</option>
+                    </select>
+                </div>
+                <button id="settings-btn" title="Settings">⚙️</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>ตั้งค่าการใช้งาน</h3>
+                <span class="close-btn">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="setting-item">
+                    <label for="font-size-slider">ขนาดตัวอักษร: <span id="font-size-value">2.8</span>rem</label>
+                    <input type="range" id="font-size-slider" min="1.5" max="4.5" step="0.1" value="2.8">
+                </div>
+                <div class="setting-item">
+                    <label for="number-type">รูปแบบตัวเลขท้ายอายะห์:</label>
+                    <select id="number-type">
+                        <option value="arabic">เลขอาหรับ (๑, ๒, ๓)</option>
+                        <option value="western">เลขทั่วไป (1, 2, 3)</option>
+                    </select>
+                </div>
+                <div class="setting-item">
+                    <label for="theme-toggle">โหมดการแสดงผล:</label>
+                    <select id="theme-toggle">
+                        <option value="light">☀️ กลางวัน (สว่าง)</option>
+                        <option value="dark">🌙 กลางคืน (มืด)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <header>
-            <div class="selector-container">
-                <select id="surah-selector">
-                    <option value="55">Surah Ar-Rahman (55)</option>
-                    <option value="67">Surah Al-Mulk (67)</option>
-                </select>
-            </div>
-            <h1 id="surah-title-arabic">الرحمن</h1>
-            <h2 id="surah-title-en">Surah Ar-Rahman</h2>
+            <h2 id="surah-title-arabic">الرحمن</h2>
+            <h3 id="surah-title-en">Surah Ar-Rahman</h3>
             <p id="surah-info">กำลังโหลดข้อมูล...</p>
         </header>
 
@@ -36,7 +82,7 @@
         </main>
 
         <footer>
-            <p>&copy; Copyright, 2026</p>
+            <p>&copy; Copyright, 2026 - by Tech for Ummah</p>
         </footer>
     </div>
 
